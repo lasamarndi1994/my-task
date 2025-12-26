@@ -27,11 +27,16 @@
           <span>To Do</span>
           <v-chip size="x-small" variant="flat" color="grey-lighten-2">{{ todoIssues.length }}</v-chip>
         </div>
-        <div class="d-flex flex-column gap-2 overflow-y-auto px-1" style="min-height: 0;">
-          <IssueCard v-for="issue in todoIssues" :key="issue.id" :issue="issue" />
-          <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
-            color="medium-emphasis">Create issue</v-btn>
-        </div>
+        <draggable v-model="todoIssues" group="issues" item-key="id"
+          class="d-flex flex-column gap-2 overflow-y-auto px-1 flex-grow-1" style="min-height: 100px;">
+          <template #item="{ element }">
+            <IssueCard :issue="element" />
+          </template>
+          <template #footer>
+            <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
+              color="medium-emphasis">Create issue</v-btn>
+          </template>
+        </draggable>
       </div>
 
       <!-- In Progress Column -->
@@ -41,11 +46,16 @@
           <span>In Progress</span>
           <v-chip size="x-small" variant="flat" color="grey-lighten-2">{{ inProgressIssues.length }}</v-chip>
         </div>
-        <div class="d-flex flex-column gap-2 overflow-y-auto px-1" style="min-height: 0;">
-          <IssueCard v-for="issue in inProgressIssues" :key="issue.id" :issue="issue" />
-          <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
-            color="medium-emphasis">Create issue</v-btn>
-        </div>
+        <draggable v-model="inProgressIssues" group="issues" item-key="id"
+          class="d-flex flex-column gap-2 overflow-y-auto px-1 flex-grow-1" style="min-height: 100px;">
+          <template #item="{ element }">
+            <IssueCard :issue="element" />
+          </template>
+          <template #footer>
+            <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
+              color="medium-emphasis">Create issue</v-btn>
+          </template>
+        </draggable>
       </div>
 
       <!-- Done Column -->
@@ -56,11 +66,16 @@
           <v-chip size="x-small" variant="flat" color="green-lighten-4" class="text-green-darken-3">{{
             doneIssues.length }}</v-chip>
         </div>
-        <div class="d-flex flex-column gap-2 overflow-y-auto px-1" style="min-height: 0;">
-          <IssueCard v-for="issue in doneIssues" :key="issue.id" :issue="issue" />
-          <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
-            color="medium-emphasis">Create issue</v-btn>
-        </div>
+        <draggable v-model="doneIssues" group="issues" item-key="id"
+          class="d-flex flex-column gap-2 overflow-y-auto px-1 flex-grow-1" style="min-height: 100px;">
+          <template #item="{ element }">
+            <IssueCard :issue="element" />
+          </template>
+          <template #footer>
+            <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
+              color="medium-emphasis">Create issue</v-btn>
+          </template>
+        </draggable>
       </div>
     </div>
   </v-container>
@@ -70,12 +85,27 @@
 import { computed } from 'vue'
 import { useTaskStore } from '@/stores/taskStore'
 import IssueCard from '@/components/IssueCard.vue'
+import draggable from 'vuedraggable'
+import type { Issue } from '@/stores/taskStore' // Import type if needed, or infer
 
 const store = useTaskStore()
 
-const todoIssues = computed(() => store.getIssuesByStatus('TODO'))
-const inProgressIssues = computed(() => store.getIssuesByStatus('IN_PROGRESS'))
-const doneIssues = computed(() => store.getIssuesByStatus('DONE'))
+const createListComputed = (status: 'TODO' | 'IN_PROGRESS' | 'DONE') => {
+  return computed({
+    get: () => store.getIssuesByStatus(status),
+    set: (newIssues: Issue[]) => {
+      newIssues.forEach(issue => {
+        if (issue.status !== status) {
+          store.moveIssue(issue.id, status)
+        }
+      })
+    }
+  })
+}
+
+const todoIssues = createListComputed('TODO')
+const inProgressIssues = createListComputed('IN_PROGRESS')
+const doneIssues = createListComputed('DONE')
 </script>
 
 <style scoped>
