@@ -1,0 +1,79 @@
+<template>
+    <v-container fluid class="h-100 pa-6">
+        <div class="d-flex align-center mb-6">
+            <h1 class="text-h5 font-weight-bold">Issues</h1>
+            <v-spacer></v-spacer>
+        </div>
+
+        <v-card variant="outlined" class="rounded-lg">
+            <v-data-table :headers="headers" :items="store.issues" item-value="id" class="text-body-2" density="compact"
+                hide-default-footer>
+                <template v-slot:item.type="{ item }">
+                    <v-icon v-if="item.type === 'Bug'" color="red" size="18" icon="mdi-alert-circle"></v-icon>
+                    <v-icon v-else-if="item.type === 'Story'" color="green" size="18" icon="mdi-bookmark"></v-icon>
+                    <v-icon v-else color="blue" size="18" icon="mdi-check-bold"></v-icon>
+                </template>
+
+                <template v-slot:item.key="{ item }">
+                    <span class="text-caption font-weight-bold text-medium-emphasis">{{ item.key }}</span>
+                </template>
+
+                <template v-slot:item.summary="{ item }">
+                    <span class="font-weight-medium text-high-emphasis">{{ item.summary }}</span>
+                </template>
+
+                <template v-slot:item.assignee="{ item }">
+                    <div class="d-flex align-center">
+                        <v-avatar size="20" class="mr-2">
+                            <v-img :src="item.assignee.avatar"></v-img>
+                        </v-avatar>
+                        <span class="text-caption">{{ item.assignee.name }}</span>
+                    </div>
+                </template>
+
+                <template v-slot:item.priority="{ item }">
+                    <div class="d-flex align-center">
+                        <v-icon v-if="item.priority === 'High'" color="red" size="16" icon="mdi-chevron-double-up"
+                            class="mr-1"></v-icon>
+                        <v-icon v-else-if="item.priority === 'Medium'" color="orange" size="16" icon="mdi-chevron-up"
+                            class="mr-1"></v-icon>
+                        <v-icon v-else color="blue" size="16" icon="mdi-chevron-down" class="mr-1"></v-icon>
+                        {{ item.priority }}
+                    </div>
+                </template>
+
+                <template v-slot:item.status="{ item }">
+                    <v-chip size="x-small" variant="flat" :color="getStatusColor(item.status)"
+                        class="font-weight-bold text-uppercase">
+                        {{ item.status.replace('_', ' ') }}
+                    </v-chip>
+                </template>
+            </v-data-table>
+        </v-card>
+    </v-container>
+</template>
+
+<script setup lang="ts">
+import { useTaskStore } from '@/stores/taskStore'
+
+const store = useTaskStore()
+
+const headers = [
+    { title: 'Type', key: 'type', width: '50px', sortable: false },
+    { title: 'Key', key: 'key', width: '100px' },
+    { title: 'Summary', key: 'summary' },
+    { title: 'Assignee', key: 'assignee' },
+    { title: 'Status', key: 'status' },
+    { title: 'Priority', key: 'priority' },
+    { title: 'Due Date', key: 'dueDate' }, // Add mocked due date if possible
+]
+
+const getStatusColor = (status: string) => {
+    switch (status) {
+        case 'TODO': return 'grey-lighten-2'
+        case 'IN_PROGRESS': return 'blue-lighten-4'
+        case 'DONE': return 'green-lighten-4'
+        default: return 'grey'
+    }
+}
+</script>
