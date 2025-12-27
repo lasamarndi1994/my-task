@@ -6,11 +6,8 @@
 import { onMounted, ref, watch } from 'vue'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
-import * as QuillMention from 'quill-mention'
+import { Mention, MentionBlot } from 'quill-mention'
 import 'quill-mention/dist/quill.mention.css'
-
-const Mention = (QuillMention as any).Mention || (QuillMention as any).default || QuillMention
-const MentionBlot = (QuillMention as any).MentionBlot || (QuillMention as any).default?.MentionBlot
 
 if (Mention) {
   Quill.register('modules/mention', Mention)

@@ -47,11 +47,20 @@
 
               <div class="mb-6">
                 <h3 class="text-subtitle-1 font-weight-bold mb-2">Description</h3>
-                <QuillEditor :content="internalDescription" @update:content="internalDescription = $event"
-                  :modules="modules" placeholder="Add a description..." />
-                <div class="pa-2 d-flex gap-2">
-                  <v-btn color="primary" size="small">Save</v-btn>
-                  <v-btn variant="text" size="small">Cancel</v-btn>
+
+                <div v-if="!isDescriptionEditing" class="pa-3 rounded-lg cursor-text text-body-2"
+                  style="min-height: 80px" @click="enableDescriptionEditing">
+                  <div v-if="internalDescription" v-html="internalDescription" class="user-content"></div>
+                  <div v-else class="text-medium-emphasis">Add a description...</div>
+                </div>
+
+                <div v-else class="border rounded-lg pa-2 bg-white elevation-1">
+                  <QuillEditor :content="internalDescription" @update:content="internalDescription = $event"
+                    :modules="modules" placeholder="Add a description..." />
+                  <div class="d-flex gap-2 mt-2">
+                    <v-btn color="primary" size="small" @click="saveDescription">Save</v-btn>
+                    <v-btn variant="text" size="small" @click="cancelDescription">Cancel</v-btn>
+                  </div>
                 </div>
               </div>
 
@@ -60,18 +69,25 @@
                   <h3 class="text-subtitle-1 font-weight-bold">Attachments</h3>
                   <v-btn icon="mdi-plus" variant="text" size="small"></v-btn>
                 </div>
-                <div class="d-flex gap-4 flex-wrap">
-                  <div class="border rounded pa-2 d-flex align-center gap-2 cursor-pointer bg-grey-lighten-5"
-                    style="width: 200px">
-                    <v-icon color="red">mdi-file-pdf-box</v-icon>
-                    <div class="text-truncate flex-grow-1 text-caption font-weight-bold">
-                      requirements_v1.pdf</div>
-                  </div>
+                <div class="d-flex flex-column gap-2">
                   <div
-                    class="border rounded pa-2 d-flex align-center flex-column justify-center cursor-pointer border-dashed"
-                    style="width: 100px; height: 80px">
-                    <v-icon color="medium-emphasis">mdi-cloud-upload</v-icon>
-                    <span class="text-caption text-medium-emphasis mt-1">Drop files</span>
+                    class="border rounded-lg pa-3 d-flex align-center gap-3 cursor-pointer hover-bg-light transition-swing">
+                    <div class="bg-red-lighten-5 rounded pa-2">
+                      <v-icon color="red">mdi-file-pdf-box</v-icon>
+                    </div>
+                    <div class="flex-grow-1 overflow-hidden">
+                      <div class="text-subtitle-2 font-weight-bold text-truncate">requirements_v1.pdf</div>
+                      <div class="text-caption text-medium-emphasis">Added 2 hours ago • 2.4 MB</div>
+                    </div>
+                    <v-btn icon="mdi-download" variant="text" size="small" color="medium-emphasis"></v-btn>
+                    <v-btn icon="mdi-delete" variant="text" size="small" color="medium-emphasis"></v-btn>
+                  </div>
+
+                  <div
+                    class="border-dashed rounded-lg pa-3 d-flex align-center justify-center gap-2 cursor-pointer text-medium-emphasis hover-bg-light"
+                    style="height: 60px">
+                    <v-icon size="small">mdi-cloud-upload</v-icon>
+                    <span class="text-caption font-weight-medium">Drop files to attach or browse</span>
                   </div>
                 </div>
               </div>
@@ -111,10 +127,12 @@
                 <h3 class="text-subtitle-1 font-weight-bold mb-2">Activity</h3>
                 <div class="d-flex align-center gap-2 mb-4">
                   <span class="text-caption font-weight-bold">Show:</span>
-                  <v-chip-group selected-class="bg-grey-lighten-3" multiple>
-                    <v-chip size="small" variant="flat" value="all">All</v-chip>
-                    <v-chip size="small" variant="tonal" value="comments" color="primary">Comments</v-chip>
-                    <v-chip size="small" variant="flat" value="history">History</v-chip>
+                  <v-chip-group selected-class="text-primary bg-blue-lighten-5" multiple>
+                    <v-chip size="small" variant="outlined" filter value="all" class="font-weight-medium">All</v-chip>
+                    <v-chip size="small" variant="outlined" filter value="comments"
+                      class="font-weight-medium">Comments</v-chip>
+                    <v-chip size="small" variant="outlined" filter value="history"
+                      class="font-weight-medium">History</v-chip>
                   </v-chip-group>
                 </div>
 
@@ -124,8 +142,8 @@
                     }}</span>
                   </v-avatar>
                   <div class="flex-grow-1">
-                    <v-text-field variant="outlined" placeholder="Add a comment..." hide-details
-                      density="compact"></v-text-field>
+                    <v-text-field variant="outlined" placeholder="Add a comment..." hide-details density="compact"
+                      bg-color="white"></v-text-field>
                     <div class="text-caption text-medium-emphasis mt-1">
                       <strong>Pro tip:</strong> press <kbd>M</kbd> to comment
                     </div>
@@ -137,15 +155,15 @@
             <!-- Sidebar -->
             <v-col cols="12" md="4" class="pa-4 bg-grey-lighten-5 overflow-y-auto"
               :style="{ 'max-height': isFullscreen ? '' : '80vh' }">
-              <v-select :model-value="issue?.status" :items="['TODO', 'IN_PROGRESS', 'DONE']" variant="solo-filled"
-                density="compact" hide-details class="mb-6 font-weight-bold">
+              <v-select :model-value="issue?.status" :items="['TODO', 'IN_PROGRESS', 'DONE']" variant="outlined"
+                density="compact" hide-details class="mb-6 font-weight-bold bg-white" style="width: 140px">
                 <template #selection="{ item }">
-                  <span class="text-uppercase font-weight-bold">{{ item.title }}</span>
+                  <span class="text-caption font-weight-bold">{{ item.title }}</span>
                 </template>
               </v-select>
 
-              <div class="border rounded bg-surface pa-0 mb-4">
-                <v-expansion-panels flat variant="accordion">
+              <div class="border rounded bg-surface pa-0 mb-4 elevation-1">
+                <v-expansion-panels flat variant="accordion" v-model="detailsPanel">
                   <v-expansion-panel title="Details" elevation="0">
                     <template #title>
                       <span class="text-subtitle-2 font-weight-bold">Details</span>
@@ -286,7 +304,26 @@ const props = defineProps<{
 
 const isFullscreen = ref(false)
 const internalDescription = ref(props.issue?.description || '')
+const isDescriptionEditing = ref(false)
 const taskStore = useTaskStore()
+const detailsPanel = ref(0) // Default to open
+
+const enableDescriptionEditing = () => {
+  isDescriptionEditing.value = true
+}
+
+const saveDescription = () => {
+  if (props.issue) {
+    props.issue.description = internalDescription.value
+    // In a real app, you'd save to store/API here
+  }
+  isDescriptionEditing.value = false
+}
+
+const cancelDescription = () => {
+  internalDescription.value = props.issue?.description || ''
+  isDescriptionEditing.value = false
+}
 
 const modules = {
   mention: {

@@ -18,6 +18,5 @@ declare module 'vue' {
     QuillEditor: typeof import('./components/QuillEditor.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TiptapMentionList: typeof import('./components/TiptapMentionList.vue')['default']
   }
 }
