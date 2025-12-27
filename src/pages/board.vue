@@ -30,7 +30,7 @@
         <draggable v-model="todoIssues" group="issues" item-key="id"
           class="d-flex flex-column gap-2 overflow-y-auto px-1 flex-grow-1" style="min-height: 100px;">
           <template #item="{ element }">
-            <IssueCard :issue="element" />
+            <IssueCard :issue="element" @click="openIssueDetails(element)" />
           </template>
           <template #footer>
             <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
@@ -49,7 +49,7 @@
         <draggable v-model="inProgressIssues" group="issues" item-key="id"
           class="d-flex flex-column gap-2 overflow-y-auto px-1 flex-grow-1" style="min-height: 100px;">
           <template #item="{ element }">
-            <IssueCard :issue="element" />
+            <IssueCard :issue="element" @click="openIssueDetails(element)" />
           </template>
           <template #footer>
             <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
@@ -69,7 +69,7 @@
         <draggable v-model="doneIssues" group="issues" item-key="id"
           class="d-flex flex-column gap-2 overflow-y-auto px-1 flex-grow-1" style="min-height: 100px;">
           <template #item="{ element }">
-            <IssueCard :issue="element" />
+            <IssueCard :issue="element" @click="openIssueDetails(element)" />
           </template>
           <template #footer>
             <v-btn variant="text" block class="text-start justify-start text-caption mt-1" prepend-icon="mdi-plus"
@@ -78,17 +78,27 @@
         </draggable>
       </div>
     </div>
+
+    <IssueDetailsDialog v-model="isDetailsOpen" :issue="selectedIssue" />
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useTaskStore } from '@/stores/taskStore'
 import IssueCard from '@/components/IssueCard.vue'
 import draggable from 'vuedraggable'
+import IssueDetailsDialog from '@/components/IssueDetailsDialog.vue'
 import type { Issue } from '@/stores/taskStore' // Import type if needed, or infer
 
 const store = useTaskStore()
+const isDetailsOpen = ref(false)
+const selectedIssue = ref<Issue | null>(null)
+
+const openIssueDetails = (issue: Issue) => {
+  selectedIssue.value = issue
+  isDetailsOpen.value = true
+}
 
 const createListComputed = (status: 'TODO' | 'IN_PROGRESS' | 'DONE') => {
   return computed({

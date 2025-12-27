@@ -13,8 +13,11 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppTopBar: typeof import('./components/AppTopBar.vue')['default']
     IssueCard: typeof import('./components/IssueCard.vue')['default']
+    IssueDetailsDialog: typeof import('./components/IssueDetailsDialog.vue')['default']
     NavigationSidebar: typeof import('./components/NavigationSidebar.vue')['default']
+    QuillEditor: typeof import('./components/QuillEditor.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TiptapMentionList: typeof import('./components/TiptapMentionList.vue')['default']
   }
 }
