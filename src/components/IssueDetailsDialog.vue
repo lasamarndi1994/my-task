@@ -35,7 +35,7 @@
             <!-- Main Content -->
             <v-col cols="12" md="8" class="pa-6 border-e overflow-y-auto"
               :style="{ 'max-height': isFullscreen ? '' : '80vh' }">
-              <h1 class="text-h4 font-weight-medium mb-4">{{ issue?.summary }}</h1>
+              <h1 class="text-h6 font-weight-medium mb-4">{{ issue?.summary }}</h1>
 
               <div class="d-flex gap-2 mb-6">
                 <v-btn variant="outlined" size="small" prepend-icon="mdi-paperclip">Attach</v-btn>
