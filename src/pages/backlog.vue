@@ -18,7 +18,7 @@
           <template v-slot:prepend>
             <v-icon :icon="getIcon(issue.type)" :color="getColor(issue.type)" size="18" class="mr-3"></v-icon>
             <span class="text-caption font-weight-bold text-medium-emphasis mr-3" style="min-width: 60px;">{{ issue.key
-              }}</span>
+            }}</span>
           </template>
 
           <v-list-item-title class="text-body-2">{{ issue.summary }}</v-list-item-title>
@@ -29,9 +29,12 @@
                 variant="flat">
                 {{ issue.status.replace('_', ' ') }}
               </v-chip>
-              <v-avatar size="24" class="mr-4">
-                <v-img :src="issue.assignee.avatar"></v-img>
-              </v-avatar>
+              <div class="d-flex mr-4">
+                <v-avatar v-for="(assignee, i) in issue.assignees" :key="assignee.id" size="24"
+                  :class="{ 'ml-n2': i > 0 }" style="border: 2px solid white">
+                  <v-img :src="assignee.avatar"></v-img>
+                </v-avatar>
+              </div>
               <v-chip size="small" color="grey-lighten-3" variant="flat">3</v-chip>
             </div>
           </template>
@@ -59,7 +62,7 @@
           <template v-slot:prepend>
             <v-icon :icon="getIcon(issue.type)" :color="getColor(issue.type)" size="18" class="mr-3"></v-icon>
             <span class="text-caption font-weight-bold text-medium-emphasis mr-3" style="min-width: 60px;">{{ issue.key
-              }}</span>
+            }}</span>
           </template>
 
           <v-list-item-title class="text-body-2">{{ issue.summary }}</v-list-item-title>
@@ -70,9 +73,12 @@
                 variant="flat">
                 {{ issue.status.replace('_', ' ') }}
               </v-chip>
-              <v-avatar size="24" class="mr-4">
-                <v-img :src="issue.assignee.avatar"></v-img>
-              </v-avatar>
+              <div class="d-flex mr-4">
+                <v-avatar v-for="(assignee, i) in issue.assignees" :key="assignee.id" size="24"
+                  :class="{ 'ml-n2': i > 0 }" style="border: 2px solid white">
+                  <v-img :src="assignee.avatar"></v-img>
+                </v-avatar>
+              </div>
               <v-chip size="small" color="grey-lighten-3" variant="flat">2</v-chip>
             </div>
           </template>

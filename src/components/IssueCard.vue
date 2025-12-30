@@ -14,16 +14,10 @@
                     <span class="text-caption text-medium-emphasis font-weight-medium">{{ issue.key }}</span>
                 </div>
 
-                <div class="d-flex align-center gap-2">
-                    <!-- Priority Icon -->
-                    <v-icon v-if="issue.priority === 'High'" color="red" size="16"
-                        icon="mdi-chevron-double-up"></v-icon>
-                    <v-icon v-else-if="issue.priority === 'Medium'" color="orange" size="16"
-                        icon="mdi-chevron-up"></v-icon>
-                    <v-icon v-else color="blue" size="16" icon="mdi-chevron-down"></v-icon>
-
-                    <v-avatar size="24">
-                        <v-img :src="issue.assignee.avatar" :alt="issue.assignee.name"></v-img>
+                <div class="d-flex">
+                    <v-avatar v-for="(assignee, i) in issue.assignees" :key="assignee.id" size="24"
+                        :class="{ 'ml-n2': i > 0 }" style="border: 2px solid white">
+                        <v-img :src="assignee.avatar" :alt="assignee.name"></v-img>
                     </v-avatar>
                 </div>
             </div>

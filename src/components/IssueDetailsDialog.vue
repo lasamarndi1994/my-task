@@ -138,8 +138,8 @@
 
                 <div class="d-flex gap-3">
                   <v-avatar size="32" color="green-darken-1">
-                    <span class="text-white text-caption">{{ issue?.assignee?.name?.charAt(0) || 'U'
-                    }}</span>
+                    <v-img v-if="taskStore.currentUser.avatar" :src="taskStore.currentUser.avatar"></v-img>
+                    <span v-else class="text-white text-caption">{{ taskStore.currentUser.name.charAt(0) }}</span>
                   </v-avatar>
                   <div class="flex-grow-1">
                     <v-text-field variant="outlined" placeholder="Add a comment..." hide-details density="compact"
@@ -172,16 +172,26 @@
                       <v-list density="compact" class="pa-0">
                         <v-list-item class="px-0">
                           <template #prepend>
-                            <div style="width: 100px" class="text-caption text-medium-emphasis">Assignee</div>
+                            <div style="width: 100px" class="text-caption text-medium-emphasis">Assignees</div>
                           </template>
-                          <div class="d-flex align-center gap-2">
-                            <v-avatar size="24">
-                              <v-img v-if="issue?.assignee?.avatar" :src="issue.assignee.avatar"></v-img>
-                              <v-icon v-else>mdi-account-circle</v-icon>
-                            </v-avatar>
-                            <span class="text-body-2 hover-underline cursor-pointer text-primary">
-                              {{ issue?.assignee?.name || 'Unassigned' }}
-                            </span>
+                          <div class="flex-grow-1">
+                            <v-autocomplete v-if="issue" :model-value="issue.assignees"
+                              @update:model-value="updateAssignees" :items="taskStore.users" item-title="name"
+                              item-value="id" return-object multiple chips closable-chips density="compact"
+                              variant="plain" hide-details placeholder="Unassigned" class="pa-0">
+                              <template #chip="{ props, item }">
+                                <v-chip v-bind="props" :prepend-avatar="item.raw.avatar" size="x-small"
+                                  class="mr-1 mb-1">{{ item.raw.name }}</v-chip>
+                              </template>
+                              <template #item="{ props, item }">
+                                <v-list-item v-bind="props" :title="undefined" class="pa-1" min-height="24">
+                                  <template #prepend>
+                                    <v-avatar :image="item.raw.avatar" size="20" class="mr-2"></v-avatar>
+                                  </template>
+                                  <v-list-item-title class="text-caption">{{ item.raw.name }}</v-list-item-title>
+                                </v-list-item>
+                              </template>
+                            </v-autocomplete>
                           </div>
                         </v-list-item>
 
@@ -292,7 +302,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Issue } from '@/stores/taskStore'
+import type { Issue, User } from '@/stores/taskStore'
 import { useTaskStore } from '@/stores/taskStore'
 import { ref } from 'vue'
 import QuillEditor from './QuillEditor.vue'
@@ -365,6 +375,12 @@ const getPriorityIcon = (priority: string | undefined) => {
     case 'medium': return 'mdi-equal'
     case 'low': return 'mdi-arrow-down'
     default: return 'mdi-minus'
+  }
+}
+
+const updateAssignees = (newAssignees: User[]) => {
+  if (props.issue) {
+    props.issue.assignees = newAssignees
   }
 }
 </script>

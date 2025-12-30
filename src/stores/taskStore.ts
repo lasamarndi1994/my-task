@@ -8,7 +8,7 @@ export interface Issue {
   description?: string
   status: 'TODO' | 'IN_PROGRESS' | 'DONE'
   priority: 'High' | 'Medium' | 'Low'
-  assignee: User
+  assignees: User[]
   type: 'Task' | 'Bug' | 'Story' | 'Epic'
   epicLink?: string // ID of the epic it belongs to
 }
@@ -76,7 +76,7 @@ export const useTaskStore = defineStore('task', () => {
       summary: 'Research competitors',
       status: 'DONE',
       priority: 'Medium',
-      assignee: users.value[1]!,
+      assignees: [users.value[1]!],
       type: 'Story',
       epicLink: 'e1',
     },
@@ -86,7 +86,7 @@ export const useTaskStore = defineStore('task', () => {
       summary: 'Draft technical specifications',
       status: 'IN_PROGRESS',
       priority: 'High',
-      assignee: users.value[0]!,
+      assignees: [users.value[0]!],
       type: 'Task',
       epicLink: 'e1',
     },
@@ -96,7 +96,7 @@ export const useTaskStore = defineStore('task', () => {
       summary: 'Design system architecture',
       status: 'TODO',
       priority: 'High',
-      assignee: users.value[2]!,
+      assignees: [users.value[2]!],
       type: 'Task',
       epicLink: 'e2',
     },
@@ -106,7 +106,7 @@ export const useTaskStore = defineStore('task', () => {
       summary: 'Setup project repository',
       status: 'DONE',
       priority: 'Low',
-      assignee: users.value[0]!,
+      assignees: [users.value[0]!],
       type: 'Task',
     },
     {
@@ -115,7 +115,7 @@ export const useTaskStore = defineStore('task', () => {
       summary: 'Implement authentication',
       status: 'IN_PROGRESS',
       priority: 'High',
-      assignee: users.value[3]!,
+      assignees: [users.value[3]!],
       type: 'Story',
       epicLink: 'e3',
     },
@@ -125,7 +125,7 @@ export const useTaskStore = defineStore('task', () => {
       summary: 'Fix login bug on Safari',
       status: 'TODO',
       priority: 'Medium',
-      assignee: users.value[1]!,
+      assignees: [users.value[1]!],
       type: 'Bug',
     },
   ])
