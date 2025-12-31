@@ -12,6 +12,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppTopBar: typeof import('./components/AppTopBar.vue')['default']
+    CreateIssueDrawer: typeof import('./components/CreateIssueDrawer.vue')['default']
     IssueCard: typeof import('./components/IssueCard.vue')['default']
     IssueDetailsDialog: typeof import('./components/IssueDetailsDialog.vue')['default']
     NavigationSidebar: typeof import('./components/NavigationSidebar.vue')['default']

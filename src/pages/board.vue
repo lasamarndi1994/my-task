@@ -12,9 +12,8 @@
             }}</v-tooltip>
           </v-avatar>
         </div>
-        <v-btn color="grey-lighten-3" variant="flat" class="ml-4">
-          GroupBy
-          <v-icon right>mdi-chevron-down</v-icon>
+        <v-btn color="primary" variant="flat" class="ml-4" prepend-icon="mdi-plus" @click="isCreateDrawerOpen = true">
+          Create Issue
         </v-btn>
       </div>
     </div>
@@ -80,6 +79,7 @@
     </div>
 
     <IssueDetailsDialog v-model="isDetailsOpen" :issue="selectedIssue" />
+    <CreateIssueDrawer v-model="isCreateDrawerOpen" />
   </v-container>
 </template>
 
@@ -88,11 +88,13 @@ import { computed, ref } from 'vue'
 import { useTaskStore } from '@/stores/taskStore'
 import IssueCard from '@/components/IssueCard.vue'
 import draggable from 'vuedraggable'
+import CreateIssueDrawer from '@/components/CreateIssueDrawer.vue'
 import IssueDetailsDialog from '@/components/IssueDetailsDialog.vue'
 import type { Issue } from '@/stores/taskStore' // Import type if needed, or infer
 
 const store = useTaskStore()
 const isDetailsOpen = ref(false)
+const isCreateDrawerOpen = ref(false)
 const selectedIssue = ref<Issue | null>(null)
 
 const openIssueDetails = (issue: Issue) => {

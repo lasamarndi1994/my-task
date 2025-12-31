@@ -33,6 +33,7 @@
                 <v-avatar v-for="(assignee, i) in issue.assignees" :key="assignee.id" size="24"
                   :class="{ 'ml-n2': i > 0 }" style="border: 2px solid white">
                   <v-img :src="assignee.avatar"></v-img>
+                  <v-tooltip activator="parent" location="top">{{ assignee.name }}</v-tooltip>
                 </v-avatar>
               </div>
               <v-chip size="small" color="grey-lighten-3" variant="flat">3</v-chip>
@@ -77,6 +78,7 @@
                 <v-avatar v-for="(assignee, i) in issue.assignees" :key="assignee.id" size="24"
                   :class="{ 'ml-n2': i > 0 }" style="border: 2px solid white">
                   <v-img :src="assignee.avatar"></v-img>
+                  <v-tooltip activator="parent" location="top">{{ assignee.name }}</v-tooltip>
                 </v-avatar>
               </div>
               <v-chip size="small" color="grey-lighten-3" variant="flat">2</v-chip>

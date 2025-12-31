@@ -28,6 +28,7 @@
                             <v-avatar v-for="(assignee, i) in item.assignees" :key="assignee.id" size="20"
                                 :class="{ 'ml-n1': i > 0 }" style="border: 1px solid white">
                                 <v-img :src="assignee.avatar"></v-img>
+                                <v-tooltip activator="parent" location="top">{{ assignee.name }}</v-tooltip>
                             </v-avatar>
                         </div>
                         <span class="text-caption text-truncate" style="max-width: 150px">
