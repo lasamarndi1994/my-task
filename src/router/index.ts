@@ -12,37 +12,48 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/layouts/default.vue'),
+      component: () => import('@/layouts/blank.vue'),
       children: [
         {
           path: '',
-          name: 'Dashboard',
-          component: () => import('@/pages/index.vue'),
+          name: 'Landing',
+          component: () => import('@/pages/Landing.vue'),
         },
+        {
+          path: 'auth/login',
+          name: 'Login',
+          component: () => import('@/pages/auth/Login.vue'),
+        },
+      ],
+    },
+    {
+      path: '/',
+      component: () => import('@/layouts/default.vue'),
+      children: [
         {
           path: 'backlog',
           name: 'Backlog',
-          component: () => import('@/pages/backlog.vue'),
+          component: () => import('@/pages/Backlog.vue'),
         },
         {
           path: 'board',
           name: 'Board',
-          component: () => import('@/pages/board.vue'),
+          component: () => import('@/pages/Board.vue'),
         },
         {
           path: 'list',
           name: 'List',
-          component: () => import('@/pages/list.vue'),
+          component: () => import('@/pages/List.vue'),
         },
         {
           path: 'reports',
           name: 'Reports',
-          component: () => import('@/pages/reports.vue'),
+          component: () => import('@/pages/Reports.vue'),
         },
         {
           path: 'roadmap',
           name: 'Roadmap',
-          component: () => import('@/pages/roadmap.vue'),
+          component: () => import('@/pages/Roadmap.vue'),
         },
       ],
     },

@@ -15,7 +15,7 @@
         <v-btn variant="text" class="text-capitalize mx-1 font-weight-medium">Pricing</v-btn>
       </div>
 
-      <v-btn color="primary" variant="flat" rounded="lg" class="ml-4 px-6 font-weight-bold" to="/board">
+      <v-btn color="primary" variant="flat" rounded="lg" class="ml-4 px-6 font-weight-bold" to="/auth/login">
         Login
       </v-btn>
     </v-app-bar>
@@ -507,8 +507,3 @@
   gap: 16px;
 }
 </style>
-
-<route lang="yaml">
-meta:
-  layout: blank
-</route>

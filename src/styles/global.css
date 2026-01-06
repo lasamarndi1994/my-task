@@ -1,0 +1,9 @@
+html,
+body {
+    overflow-y: auto !important;
+}
+
+.v-field__input {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
