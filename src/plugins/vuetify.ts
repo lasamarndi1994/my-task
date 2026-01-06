@@ -14,9 +14,9 @@ import 'vuetify/styles'
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
   theme: {
-    defaultTheme: 'myTaskTheme',
+    defaultTheme: 'light',
     themes: {
-      myTaskTheme: {
+      light: {
         dark: false,
         colors: {
           'background': '#FFFFFF',
@@ -28,6 +28,20 @@ export default createVuetify({
           'success': '#36B37E',
           'warning': '#FFAB00',
           'surface-variant': '#F4F5F7',
+        },
+      },
+      dark: {
+        dark: true,
+        colors: {
+          'background': '#010409',
+          'surface': '#0D1117',
+          'primary': '#0052CC',
+          'secondary': '#8B949E',
+          'error': '#F85149',
+          'info': '#58A6FF',
+          'success': '#238636',
+          'warning': '#D29922',
+          'surface-variant': '#161B22',
         },
       },
     },

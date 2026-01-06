@@ -17,12 +17,12 @@ const router = createRouter({
         {
           path: '',
           name: 'Landing',
-          component: () => import('@/pages/Landing.vue'),
+          component: () => import('@/pages/LandingPage.vue'),
         },
         {
           path: 'auth/login',
           name: 'Login',
-          component: () => import('@/pages/auth/Login.vue'),
+          component: () => import('@/pages/auth/LoginPage.vue'),
         },
       ],
     },
@@ -33,17 +33,17 @@ const router = createRouter({
         {
           path: 'backlog',
           name: 'Backlog',
-          component: () => import('@/pages/Backlog.vue'),
+          component: () => import('@/pages/BacklogPage.vue'),
         },
         {
           path: 'board',
           name: 'Board',
-          component: () => import('@/pages/Board.vue'),
+          component: () => import('@/pages/BoardPage.vue'),
         },
         {
           path: 'list',
           name: 'List',
-          component: () => import('@/pages/List.vue'),
+          component: () => import('@/pages/TaskListPage.vue'),
         },
         {
           path: 'reports',
@@ -53,7 +53,7 @@ const router = createRouter({
         {
           path: 'roadmap',
           name: 'Roadmap',
-          component: () => import('@/pages/Roadmap.vue'),
+          component: () => import('@/pages/RoadmapPage.vue'),
         },
       ],
     },

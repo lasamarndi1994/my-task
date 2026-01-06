@@ -3,7 +3,12 @@ body {
     overflow-y: auto !important;
 }
 
+<<<<<<< HEAD
 .v-field__input {
+=======
+/* Fix: Use standard descendant selector instead of :deep() for global CSS */
+.custom-input .v-field__input {
+>>>>>>> 72aac48174f3a06f8081693d13f7a9499ae4d285
     padding-top: 15px !important;
     padding-bottom: 15px !important;
 }

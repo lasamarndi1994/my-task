@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar height="50" flat class="border-b px-4">
+  <v-app-bar height="48" flat class="border-b px-4">
     <div class="d-flex align-center w-100">
       <v-app-bar-nav-icon variant="text" @click.stop="uiStore.toggleDrawer"></v-app-bar-nav-icon>
       <div class="text-subtitle-1 font-weight-bold mr-4">{{ title }}</div>
@@ -53,7 +53,7 @@
             </v-btn>
           </template>
           <v-card rounded="lg" elevation="3">
-            <div class="d-flex align-center justify-space-between px-4 py-3 bg-grey-lighten-4 border-b">
+            <div class="d-flex align-center justify-space-between px-4 py-3 bg-surface-variant border-b">
               <div class="text-subtitle-1 font-weight-bold text-center w-100">Help</div>
               <v-btn icon density="compact" variant="text" size="small" style="position: absolute; right: 8px;">
                 <v-icon>mdi-close</v-icon>
@@ -92,7 +92,7 @@
 
             <v-divider></v-divider>
 
-            <div class="bg-grey-lighten-5 pa-4 text-center">
+            <div class="bg-surface-variant pa-4 text-center">
               <div class="d-flex justify-center gap-4 flex-wrap text-caption text-medium-emphasis mb-2">
                 <a href="#" class="text-decoration-none text-medium-emphasis">About Jira</a>
                 <a href="#" class="text-decoration-none text-medium-emphasis">Terms of use</a>
@@ -114,7 +114,7 @@
             <div class="d-flex align-center justify-space-between px-4 py-3 border-b">
               <span class="text-subtitle-2 font-weight-bold">Personal My tasks settings</span>
               <v-sheet border rounded class="px-2 py-1 text-caption text-medium-emphasis d-flex align-center gap-2">
-                Search <span class="bg-grey-lighten-3 px-1 rounded ml-1 text-xs">Ctrl + K</span>
+                Search <span class="bg-surface-variant px-1 rounded ml-1 text-xs">Ctrl + K</span>
               </v-sheet>
             </div>
 
@@ -220,7 +220,7 @@
                   <v-list density="compact" nav class="pa-0">
                     <!-- Light -->
                     <v-list-item class="mb-2" rounded="md" @click="selectTheme('light')" :active="userTheme === 'light'"
-                      active-color="primary" variant="plain">
+                      color="primary" variant="plain">
                       <template v-slot:prepend>
                         <div class="d-flex align-center mr-2">
                           <v-icon :color="userTheme === 'light' ? 'primary' : 'medium-emphasis'">
@@ -245,7 +245,7 @@
 
                     <!-- Dark -->
                     <v-list-item class="mb-2" rounded="md" @click="selectTheme('dark')" :active="userTheme === 'dark'"
-                      active-color="primary" variant="plain">
+                      color="primary" variant="plain">
                       <template v-slot:prepend>
                         <div class="d-flex align-center mr-2">
                           <v-icon :color="userTheme === 'dark' ? 'primary' : 'medium-emphasis'">
@@ -271,7 +271,7 @@
 
                     <!-- Auto -->
                     <v-list-item rounded="md" @click="selectTheme('system')" :active="userTheme === 'system'"
-                      active-color="primary" variant="plain">
+                      color="primary" variant="plain">
                       <template v-slot:prepend>
                         <div class="d-flex align-center mr-2">
                           <v-icon :color="userTheme === 'system' ? 'primary' : 'medium-emphasis'">
@@ -330,7 +330,7 @@ const uiStore = useUiStore()
 const theme = useTheme()
 
 const searchFocused = ref(false)
-const searchWidth = computed(() => searchFocused.value ? 280 : 180)
+const searchWidth = computed(() => searchFocused.value ? 420 : 180)
 
 const title = computed(() => {
   if (route.path.includes('roadmap')) return 'Roadmap'
@@ -341,15 +341,15 @@ const title = computed(() => {
 })
 
 // Theme Logic
-const userTheme = ref(localStorage.getItem('user-theme') || 'system')
+const userTheme = ref(localStorage.getItem('user-theme') || 'light')
 const systemTheme = ref(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
 
 const updateTheme = () => {
-  if (userTheme.value === 'system') {
-    theme.global.name.value = systemTheme.value === 'dark' ? 'dark' : 'myTaskTheme'
-  } else {
-    theme.global.name.value = userTheme.value === 'dark' ? 'dark' : 'myTaskTheme'
-  }
+  const newTheme = userTheme.value === 'system'
+    ? (systemTheme.value === 'dark' ? 'dark' : 'light')
+    : (userTheme.value === 'dark' ? 'dark' : 'light')
+
+  theme.change(newTheme);
   localStorage.setItem('user-theme', userTheme.value)
 }
 

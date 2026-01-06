@@ -54,7 +54,7 @@
                   <div v-else class="text-medium-emphasis">Add a description...</div>
                 </div>
 
-                <div v-else class="border rounded-lg pa-2 bg-white elevation-1">
+                <div v-else class="border rounded-lg pa-2 bg-surface elevation-1">
                   <QuillEditor :content="internalDescription" @update:content="internalDescription = $event"
                     :modules="modules" placeholder="Add a description..." />
                   <div class="d-flex gap-2 mt-2">
@@ -97,13 +97,12 @@
                   <h3 class="text-subtitle-1 font-weight-bold">Linked Issues</h3>
                   <v-btn icon="mdi-plus" variant="text" size="small"></v-btn>
                 </div>
-                <div class="border rounded px-4 py-2 d-flex align-center bg-grey-lighten-5 mb-2">
+                <div class="border rounded px-4 py-2 d-flex align-center bg-surface-variant mb-2">
                   <v-icon color="blue" size="small" class="mr-2">mdi-check-bold</v-icon>
                   <span class="text-caption font-weight-bold mr-2">KAN-5</span>
                   <span class="text-body-2 text-medium-emphasis text-truncate flex-grow-1">Implement
                     authentication</span>
-                  <v-chip size="x-small" color="blue-lighten-4" class="text-blue-darken-3 font-weight-bold">IN
-                    PROGRESS</v-chip>
+                  <v-chip size="x-small" color="info" class="font-weight-bold" variant="flat">IN PROGRESS</v-chip>
                 </div>
               </div>
 
@@ -117,7 +116,7 @@
                 </div>
                 <v-progress-linear model-value="0" color="primary" height="4" rounded class="mb-4"></v-progress-linear>
                 <!-- Add empty state matching screenshot roughly -->
-                <div class="border rounded px-4 py-2 d-flex align-center bg-grey-lighten-5">
+                <div class="border rounded px-4 py-2 d-flex align-center bg-surface-variant">
                   <v-icon color="primary" class="mr-2">mdi-checkbox-blank-outline</v-icon>
                   <span class="text-body-2 text-medium-emphasis">No subtasks yet</span>
                 </div>
@@ -144,7 +143,7 @@
                   </v-avatar>
                   <div class="flex-grow-1">
                     <v-text-field variant="outlined" placeholder="Add a comment..." hide-details density="compact"
-                      bg-color="white"></v-text-field>
+                      bg-color="surface"></v-text-field>
                     <div class="text-caption text-medium-emphasis mt-1">
                       <strong>Pro tip:</strong> press <kbd>M</kbd> to comment
                     </div>
@@ -154,10 +153,10 @@
             </v-col>
 
             <!-- Sidebar -->
-            <v-col cols="12" md="4" class="pa-4 bg-grey-lighten-5 overflow-y-auto"
+            <v-col cols="12" md="4" class="pa-4 bg-surface-variant overflow-y-auto"
               :style="{ 'max-height': isFullscreen ? '' : '80vh' }">
               <v-select :model-value="issue?.status" :items="['TODO', 'IN_PROGRESS', 'DONE']" variant="outlined"
-                density="compact" hide-details class="mb-6 font-weight-bold bg-white" style="width: 140px">
+                density="compact" hide-details class="mb-6 font-weight-bold bg-surface" style="width: 140px">
                 <template #selection="{ item }">
                   <span class="text-caption font-weight-bold">{{ item.title }}</span>
                 </template>
@@ -283,7 +282,7 @@
                             <div style="width: 100px" class="text-caption text-medium-emphasis">Time tracking
                             </div>
                           </template>
-                          <v-progress-linear model-value="0" color="grey-lighten-2" height="6"
+                          <v-progress-linear model-value="0" color="surface-variant" height="6"
                             rounded></v-progress-linear>
                         </v-list-item>
                       </v-list>

@@ -16,7 +16,7 @@
 
                 <div class="d-flex">
                     <v-avatar v-for="(assignee, i) in issue.assignees" :key="assignee.id" size="24"
-                        :class="{ 'ml-n2': i > 0 }" style="border: 2px solid white">
+                        :class="{ 'ml-n2': i > 0 }" style="border: 2px solid rgb(var(--v-theme-surface))">
                         <v-img :src="assignee.avatar" :alt="assignee.name"></v-img>
                         <v-tooltip activator="parent" location="top">{{ assignee.name }}</v-tooltip>
                     </v-avatar>
@@ -35,9 +35,9 @@ defineProps<{
 </script>
 
 <style scoped>
-.issue-card:hover {
+/* .issue-card:hover {
     background-color: #fafafa;
-}
+} */
 
 .gap-2 {
     gap: 8px;
